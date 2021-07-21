@@ -24,3 +24,13 @@ node bike_down.js
 
 建议直接使用 Release 页发布的数据，不定期更新
 
+### 字段名解释
+
+- id: 车辆id，也是页面路径
+- brand: 品牌
+- model: 型号
+- max_spd: 最大时速 km/h
+- engine_power: 电机最大功率 W
+- power_type: 电池类型 锂电池/铅酸电池
+- power_cpct: 电池容量 Ah
+- power_volt: 电池电压 V
