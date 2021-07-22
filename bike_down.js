@@ -92,17 +92,13 @@ const createDB = () => {
   });
 };
 
-const insertData = insertArr => {
-  return new Promise((res, rej) => {
-    createDB().then(() => {
-      db.run(`INSERT INTO bike_path(id, brand, model, max_spd, engine_power, power_type, power_cpct, power_volt) VALUES(?, ?, ?, ?, ?, ?, ?, ?)`, insertArr, err => {
-        if (err) {
-          console.log(err);
-        }
-        // console.log('数据插入成功');
-        res();
-      });
-    });
+const insertData = async insertArr => {
+  await createDB();
+  db.run(`INSERT INTO bike_path(id, brand, model, max_spd, engine_power, power_type, power_cpct, power_volt) VALUES(?, ?, ?, ?, ?, ?, ?, ?)`, insertArr, err => {
+    if (err) {
+      console.log(err);
+    }
+    // console.log('数据插入成功');
   });
 };
 
