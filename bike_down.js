@@ -9,6 +9,7 @@ const { JSDOM } = jsdom;
 let pathArr = [];
 let num = 0;
 let pathArrLength = 0;
+let isCreatedDB = false;
 
 const readFile = async () => {
   return new Promise((resolve, reject) => {
@@ -84,16 +85,19 @@ const db = new sqlite3.Database('./download/bike.db', err => {
   console.log('数据库创建成功');
 });
 
-const createDB = () => {
+const createDB = isCreated => {
   return new Promise((resolve, reject) => {
-    db.run('CREATE TABLE bike_path(id integer, brand text, model text, max_spd integer, engine_power integer, power_type text, power_cpct integer, power_volt integer)', () => {
-      resolve();
-    });
+    isCreated
+      ? resolve()
+      : db.run('CREATE TABLE bike_path(id integer, brand text, model text, max_spd integer, engine_power integer, power_type text, power_cpct integer, power_volt integer)', () => {
+          resolve();
+          isCreatedDB = true;
+        });
   });
 };
 
 const insertData = async insertArr => {
-  await createDB();
+  await createDB(isCreatedDB);
   db.run(`INSERT INTO bike_path(id, brand, model, max_spd, engine_power, power_type, power_cpct, power_volt) VALUES(?, ?, ?, ?, ?, ?, ?, ?)`, insertArr, err => {
     if (err) {
       console.log(err);
